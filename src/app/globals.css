@@ -9,6 +9,5 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: white;
+  @apply bg-white p-8;
 }
