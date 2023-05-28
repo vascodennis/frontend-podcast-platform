@@ -36,8 +36,18 @@ const Feed = () => {
   }
 
   console.log(allPodcast);
-
-  return <div>Feed</div>;
+  return (
+    <section className="grid grid-cols-4 gap-2 gap-y-24 mt-32">
+      {allPodcast.feed.entry.map((podcast, index) => (
+        <PodcastCard
+          key={index}
+          title={podcast["title"].label}
+          author={podcast["im:artist"].label}
+          image={podcast["im:image"][0].label}
+        />
+      ))}
+    </section>
+  );
 };
 
 export default Feed;
