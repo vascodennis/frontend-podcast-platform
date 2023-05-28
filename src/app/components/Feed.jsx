@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { PodcastCard } from "./PodcastCard";
+import Link from "next/link";
 
 const Feed = () => {
   const [allPodcasts, setAllPodcasts] = useState([]);
@@ -65,6 +66,8 @@ const Feed = () => {
     return <div>Error: {error}</div>;
   }
 
+  console.log(allPodcasts.feed.entry);
+
   return (
     <>
       <div className="w-full h-8 flex justify-end">
@@ -85,20 +88,28 @@ const Feed = () => {
       <section className="grid grid-cols-4 gap-2 gap-y-24 mt-32">
         {searchedResults.length > 0
           ? searchedResults.map((podcast, index) => (
-              <PodcastCard
+              <Link
+                href={`/podcast/${podcast.id.attributes["im:id"]}`}
                 key={index}
-                title={podcast["im:name"].label}
-                author={podcast["im:artist"].label}
-                image={podcast["im:image"][0].label}
-              />
+              >
+                <PodcastCard
+                  title={podcast["im:name"].label}
+                  author={podcast["im:artist"].label}
+                  image={podcast["im:image"][0].label}
+                />
+              </Link>
             ))
           : allPodcasts.feed.entry.map((podcast, index) => (
-              <PodcastCard
+              <Link
+                href={`/podcast/${podcast.id.attributes["im:id"]}`}
                 key={index}
-                title={podcast["im:name"].label}
-                author={podcast["im:artist"].label}
-                image={podcast["im:image"][0].label}
-              />
+              >
+                <PodcastCard
+                  title={podcast["im:name"].label}
+                  author={podcast["im:artist"].label}
+                  image={podcast["im:image"][0].label}
+                />
+              </Link>
             ))}
       </section>
     </>
