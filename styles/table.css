@@ -1,0 +1,34 @@
+/* podcast-table.css */
+
+.podcast-table {
+  width: 100%;
+}
+
+.podcast-table th {
+  text-align: left;
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-bottom: 2px solid #d3d3d3;
+}
+
+.podcast-table th:first-child {
+  width: 66%;
+}
+
+.podcast-table th:nth-child(2),
+.podcast-table th:nth-child(3) {
+  width: 17%;
+}
+
+.podcast-table th:nth-child(3) {
+  margin-left: 1rem;
+}
+
+.podcast-table td {
+  padding: 0.7rem 0.7rem 0.7rem 0.5rem;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.podcast-table tbody tr:nth-child(odd) {
+  background-color: #f4f4f4;
+}

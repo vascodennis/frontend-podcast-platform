@@ -1,5 +1,6 @@
 import Nav from "./components/Nav";
 import "./globals.css";
+import "../../styles/table.css";
 import { Montserrat } from "next/font/google";
 
 const inter = Montserrat({ subsets: ["latin"] });
