@@ -1,6 +1,10 @@
 import React from "react";
 
 const EpisodeInfo = ({ episodeinfo }) => {
+  if (!episodeinfo || episodeinfo.length === 0) {
+    return <p>No episodes available.</p>;
+  }
+
   return (
     <div className="flex flex-col justify-center items-center w-1/3 h-fit mr-32 shadow-lg border border-grayLight p-4">
       <img
