@@ -2,42 +2,41 @@
 
 import { useState, useEffect, useRef } from "react";
 import { PodcastCard } from "./PodcastCard";
+
 import Link from "next/link";
+import usePodcastsAll from "../../../lib/usePodcastAll";
 
 const Feed = () => {
   const [allPodcasts, setAllPodcasts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Search states
   const [searchText, setSearchText] = useState("");
   const [searchedResults, setSearchedResults] = useState([]);
 
   const searchTimeoutRef = useRef(null);
 
-  const fetchPodcasts = async () => {
-    try {
-      const response = await fetch(
-        "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-      );
-      const data = await response.json();
-      setAllPodcasts(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchPodcasts();
+    const fetchData = async () => {
+      try {
+        const data = await usePodcastsAll();
+        setAllPodcasts(data);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
     return () => {
       clearTimeout(searchTimeoutRef.current);
     };
   }, []);
 
   const filterPrompts = (searchText) => {
-    const regex = new RegExp(searchText, "i"); // 'i' flag for case-insensitive search
+    const regex = new RegExp(searchText, "i");
     return allPodcasts.feed.entry.filter(
       (item) =>
         regex.test(item["im:artist"].label) ||
@@ -65,8 +64,6 @@ const Feed = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
-  console.log(allPodcasts.feed.entry);
 
   return (
     <>

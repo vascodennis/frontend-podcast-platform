@@ -4,57 +4,36 @@ import EpisodeInfo from "@/app/components/EpisodeInfo";
 import EpisodesTable from "../../components/EpisodesTable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import xml2js from "xml2js";
+import useRssFeed from "../../../../lib/useRssFeed";
+import usePodcastData from "../../../../lib/usePodcastData";
 
 const PodcastDetails = () => {
   const pathname = usePathname();
-  const PodcastID = pathname.split("/")[2];
+  const podcastID = pathname.split("/")[2];
 
-  const [podcastDescription, setPodcastDescription] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [rssItems, setRssItems] = useState(null);
+
+  const { podcastDescription, error: podcastError } = usePodcastData(podcastID);
+
+  const { rssItems, error: rssError } = useRssFeed(
+    podcastDescription?.results[0]?.feedUrl
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://itunes.apple.com/lookup?id=${PodcastID}`
-        );
-        const data = await response.json();
-        setPodcastDescription(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (PodcastID) {
-      fetchData();
+    if (podcastError || rssError) {
+      setError(podcastError || rssError);
     }
-  }, [PodcastID]);
+    setIsLoading(false);
+  }, [podcastError, rssError]);
 
-  console.log(PodcastID);
-  console.log(podcastDescription);
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
-  useEffect(() => {
-    async function fetchRss() {
-      const response = await fetch("https://feeds.megaphone.fm/60-songs");
-      const xmlString = await response.text();
-
-      const parser = new xml2js.Parser({ explicitArray: false });
-      const parsedXml = await parser.parseStringPromise(xmlString);
-
-      const rssItems = parsedXml.rss.channel.item;
-
-      setRssItems(rssItems);
-    }
-
-    fetchRss();
-  }, []);
-
-  console.log(rssItems);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -71,7 +50,7 @@ const PodcastDetails = () => {
               </h2>
             </div>
             <div className="w-full shadow-lg border border-grayLight p-4 mt-8">
-              <EpisodesTable details={rssItems} />
+              <EpisodesTable details={rssItems} podcastID={podcastID} />
             </div>
           </div>
         </section>
