@@ -4,12 +4,12 @@ function EpisodeAudio({ episodedetails }) {
   if (!episodedetails || episodedetails.length === 0) {
     return <p>No episodes available.</p>;
   }
-  console.log(episodedetails.enclosure["$"].url);
+
   return (
-    <div className="flex flex-col w-2/3 shadow-lg border border-grayLight p-4">
+    <div className="flex flex-col w-2/3 shadow-lg border border-grayLight p-4 h-fit">
       <h2 className="text-4xl font-bold">{episodedetails.title}</h2>
       <p
-        className="italic text-base mt-4"
+        className="italic text-xs mt-4"
         dangerouslySetInnerHTML={{ __html: episodedetails.description }}
       />
 
