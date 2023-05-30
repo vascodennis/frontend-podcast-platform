@@ -35,3 +35,17 @@ After running the development server, you should be able to open http://localhos
 
 ## Project Structure
 The project uses the new file-based routing system introduced in Next.js 13. Pages are defined by exporting a component from a page.js file. Layouts, which are shared between multiple pages, are defined by exporting a React component from a layout.js file. The root layout is defined at the top level of the app directory and applies to all routes.
+
+## Production Mode
+
+The code is minimized to reduce the size of the JavaScript files. This leads to faster download times and improves overall performance. 
+<br>
+To build the application for production, run:
+```bash
+npm run build
+```
+This will create a .next directory containing the optimized output. After building the application, you can run it in production mode with:
+```bash
+npm start
+```
+
