@@ -5,6 +5,7 @@ import { PodcastCard } from "./PodcastCard";
 
 import Link from "next/link";
 import usePodcastsAll from "../../../lib/usePodcastAll";
+import Loader from "./Loader";
 
 const Feed = () => {
   const [allPodcasts, setAllPodcasts] = useState([]);
@@ -74,7 +75,7 @@ const Feed = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {

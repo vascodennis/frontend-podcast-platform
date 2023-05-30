@@ -19,7 +19,7 @@ const EpisodeInfo = ({ episodeinfo }) => {
       <img
         className="p-8"
         src={episodeinfo.results[0].artworkUrl600}
-        alt="teste"
+        alt={episodeinfo.results[0].collectionName}
         width={300}
         height={300}
       />

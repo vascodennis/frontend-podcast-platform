@@ -33,7 +33,7 @@ const page = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   let filteredEpisodes;
@@ -43,7 +43,6 @@ const page = () => {
     filteredEpisodes = rssItems.filter(
       (episode) => episode.guid["_"] === episodeID
     );
-    console.log(filteredEpisodes);
   }
 
   return (

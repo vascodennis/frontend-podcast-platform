@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import useRssFeed from "../../../../lib/useRssFeed";
 import usePodcastData from "../../../../lib/usePodcastData";
+import Loader from "@/app/components/Loader";
 
 const PodcastDetails = () => {
   const pathname = usePathname();
@@ -32,7 +33,7 @@ const PodcastDetails = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
@@ -53,12 +54,12 @@ const PodcastDetails = () => {
                 <EpisodesTable details={rssItems} podcastID={podcastID} />
               </div>
             ) : (
-              "Loading"
+              <Loader />
             )}
           </div>
         </section>
       ) : (
-        "Loading..."
+        <Loader />
       )}
     </>
   );
