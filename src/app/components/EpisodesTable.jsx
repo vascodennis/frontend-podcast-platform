@@ -10,8 +10,8 @@ const formatDate = (dateString) => {
 };
 
 const formatDuration = (duration) => {
-  // Check if the input is already in "hh:mm:ss" format
-  const hhmmssPattern = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+  // Check if the input is already in "hh:mm:ss" or "hh:mm" format
+  const hhmmssPattern = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
   if (typeof duration === "string" && hhmmssPattern.test(duration)) {
     return duration;
   }
@@ -19,6 +19,14 @@ const formatDuration = (duration) => {
   const hours = Math.floor(duration / 3600);
   const mins = Math.floor((duration % 3600) / 60);
   const secs = duration % 60;
+
+  // If the seconds are 0, return in "hh:mm" format
+  if (secs === 0) {
+    return `${hours.toString().padStart(2, "0")}:${mins
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
   return `${hours.toString().padStart(2, "0")}:${mins
     .toString()
     .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;

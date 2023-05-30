@@ -8,7 +8,11 @@ const useRssFeed = (url) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+        const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+        const targetUrl = url;
+        const finalUrl = proxyUrl + targetUrl;
+
+        const response = await fetch(finalUrl);
         const xmlString = await response.text();
 
         const parser = new xml2js.Parser({ explicitArray: false });
