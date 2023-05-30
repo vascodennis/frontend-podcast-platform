@@ -39,9 +39,7 @@ const Feed = () => {
     const regex = new RegExp(searchText, "i");
     return allPodcasts.feed.entry.filter(
       (item) =>
-        regex.test(item["im:artist"].label) ||
-        regex.test(item["im:name"].label) ||
-        regex.test(item["im:image"][0].label)
+        regex.test(item["im:artist"].label) || regex.test(item["im:name"].label)
     );
   };
 
@@ -69,7 +67,9 @@ const Feed = () => {
     <>
       <div className="w-full h-8 flex justify-end">
         <div className="bg-titleBlue rounded p-2 flex justify-center items-center">
-          {(searchedResults.length = 0 ? 100 : searchedResults.length)}
+          {searchedResults.length === 0 && searchText === ""
+            ? allPodcasts.feed.entry.length
+            : searchedResults.length}
         </div>
         <form>
           <input
