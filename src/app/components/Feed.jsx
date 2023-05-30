@@ -82,7 +82,7 @@ const Feed = () => {
           />
         </form>
       </div>
-      <section className="grid grid-cols-4 gap-2 gap-y-24 mt-32">
+      <section className="grid grid-cols-4 gap-2 gap-y-24 mt-32 place-items-center">
         {searchedResults.length > 0
           ? searchedResults.map((podcast, index) => (
               <Link

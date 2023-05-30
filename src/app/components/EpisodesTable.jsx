@@ -9,10 +9,16 @@ const formatDate = (dateString) => {
     .padStart(2, "0")}/${date.getFullYear()}`;
 };
 
-const formatDuration = (seconds) => {
-  const hours = Math.floor(seconds / 3600);
-  const mins = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
+const formatDuration = (duration) => {
+  // Check if the input is already in "hh:mm:ss" format
+  const hhmmssPattern = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+  if (typeof duration === "string" && hhmmssPattern.test(duration)) {
+    return duration;
+  }
+
+  const hours = Math.floor(duration / 3600);
+  const mins = Math.floor((duration % 3600) / 60);
+  const secs = duration % 60;
   return `${hours.toString().padStart(2, "0")}:${mins
     .toString()
     .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
