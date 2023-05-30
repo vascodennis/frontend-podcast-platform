@@ -11,7 +11,7 @@ import Loader from "@/app/components/Loader";
 const page = () => {
   const pathname = usePathname();
   const podcastID = pathname.split("/")[2];
-  const episodeID = pathname.split("/")[4];
+  const episodeID = decodeURIComponent(pathname.split("/")[4]);
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

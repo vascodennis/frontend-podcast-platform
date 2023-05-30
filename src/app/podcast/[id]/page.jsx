@@ -3,17 +3,19 @@
 import EpisodeInfo from "@/app/components/EpisodeInfo";
 import EpisodesTable from "@/app/components/EpisodesTable";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useRssFeed from "../../../../lib/useRssFeed";
 import usePodcastData from "../../../../lib/usePodcastData";
 import Loader from "@/app/components/Loader";
+import { LoadingContext } from "../../../../lib/LoadingProvider";
 
 const PodcastDetails = () => {
   const pathname = usePathname();
   const podcastID = pathname.split("/")[2];
 
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { setIsLoading } = useContext(LoadingContext);
 
   const { podcastDescription, error: podcastError } = usePodcastData(podcastID);
 
@@ -22,6 +24,7 @@ const PodcastDetails = () => {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     if (podcastError || rssError) {
       setError(podcastError || rssError);
     }
@@ -30,10 +33,6 @@ const PodcastDetails = () => {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  }
-
-  if (isLoading) {
-    return <Loader />;
   }
 
   return (

@@ -5,17 +5,19 @@ import { PodcastCard } from "./PodcastCard";
 
 import Link from "next/link";
 import usePodcastsAll from "../../../lib/usePodcastAll";
-import Loader from "./Loader";
+import { useContext } from "react";
+import { LoadingContext } from "../../../lib/LoadingProvider";
 
 const Feed = () => {
   const [allPodcasts, setAllPodcasts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [searchText, setSearchText] = useState("");
   const [searchedResults, setSearchedResults] = useState([]);
 
   const searchTimeoutRef = useRef(null);
+
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +77,7 @@ const Feed = () => {
   };
 
   if (isLoading) {
-    return <Loader />;
+    setIsLoading(true);
   }
 
   if (error) {
@@ -87,7 +89,7 @@ const Feed = () => {
       <div className="w-full h-8 flex justify-end">
         <div className="bg-titleBlue rounded p-2 flex justify-center items-center">
           {searchedResults.length === 0 && searchText === ""
-            ? allPodcasts.feed.entry.length
+            ? allPodcasts?.feed?.entry.length
             : searchedResults.length}
         </div>
         <form>
@@ -115,7 +117,7 @@ const Feed = () => {
                 />
               </Link>
             ))
-          : allPodcasts.feed.entry.map((podcast, index) => (
+          : allPodcasts?.feed?.entry.map((podcast, index) => (
               <Link
                 href={`/podcast/${podcast.id.attributes["im:id"]}`}
                 key={index}

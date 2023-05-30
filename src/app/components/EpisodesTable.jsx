@@ -50,7 +50,11 @@ const EpisodesTable = ({ podcastID, details }) => {
         {details.map((episode, index) => (
           <tr key={index}>
             <td className="text-titleBlue">
-              <Link href={`/podcast/${podcastID}/episode/${episode.guid["_"]}`}>
+              <Link
+                href={`/podcast/${podcastID}/episode/${encodeURIComponent(
+                  episode.guid["_"]
+                )}`}
+              >
                 {episode.title}
               </Link>
             </td>

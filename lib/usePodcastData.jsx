@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LoadingContext } from "./LoadingProvider";
 
 function usePodcastData(podcastID) {
   const [podcastDescription, setpodcastDescription] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,9 +26,9 @@ function usePodcastData(podcastID) {
     if (podcastID) {
       fetchData();
     }
-  }, [podcastID]);
+  }, [podcastID, setIsLoading]);
 
-  return { podcastDescription, error, isLoading };
+  return { podcastDescription, error };
 }
 
 export default usePodcastData;
