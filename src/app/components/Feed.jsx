@@ -19,9 +19,27 @@ const Feed = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await usePodcastsAll();
-        setAllPodcasts(data);
-        setIsLoading(false);
+        // Check if data is already in local storage
+        const cachedData = localStorage.getItem("podcastsData");
+        const cachedTime = localStorage.getItem("podcastsDataTime");
+
+        // Check if data is not null and less than a day old
+        if (
+          cachedData !== null &&
+          cachedTime !== null &&
+          Date.now() - cachedTime < 86400000
+        ) {
+          setAllPodcasts(JSON.parse(cachedData));
+          setIsLoading(false);
+        } else {
+          const data = await usePodcastsAll();
+          setAllPodcasts(data);
+          setIsLoading(false);
+
+          // Store data and time of fetch in local storage
+          localStorage.setItem("podcastsData", JSON.stringify(data));
+          localStorage.setItem("podcastsDataTime", Date.now().toString());
+        }
       } catch (error) {
         setError(error.message);
         setIsLoading(false);

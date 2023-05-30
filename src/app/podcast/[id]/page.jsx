@@ -37,8 +37,7 @@ const PodcastDetails = () => {
 
   return (
     <>
-      {rssItems &&
-      podcastDescription &&
+      {podcastDescription &&
       podcastDescription.results &&
       podcastDescription.results.length > 0 ? (
         <section className="flex p-8">
@@ -49,9 +48,13 @@ const PodcastDetails = () => {
                 Episodes: {podcastDescription.results[0].trackCount}
               </h2>
             </div>
-            <div className="w-full shadow-lg border border-grayLight p-4 mt-8">
-              <EpisodesTable details={rssItems} podcastID={podcastID} />
-            </div>
+            {rssItems ? (
+              <div className="w-full shadow-lg border border-grayLight p-4 mt-8">
+                <EpisodesTable details={rssItems} podcastID={podcastID} />
+              </div>
+            ) : (
+              "Loading"
+            )}
           </div>
         </section>
       ) : (

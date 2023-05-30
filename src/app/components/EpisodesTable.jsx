@@ -29,8 +29,6 @@ const EpisodesTable = ({ podcastID, details }) => {
     return <p>No episodes available.</p>;
   }
 
-  console.log(details);
-
   return (
     <table className="podcast-table">
       <thead>
