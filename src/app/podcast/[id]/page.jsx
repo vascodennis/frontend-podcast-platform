@@ -1,7 +1,7 @@
 "use client";
 
 import EpisodeInfo from "@/app/components/EpisodeInfo";
-import EpisodesTable from "../../components/EpisodesTable";
+import EpisodesTable from "@/app/components/EpisodesTable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import useRssFeed from "../../../../lib/useRssFeed";

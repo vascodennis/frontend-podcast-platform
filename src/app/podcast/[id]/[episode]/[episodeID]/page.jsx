@@ -6,6 +6,7 @@ import EpisodeInfo from "@/app/components/EpisodeInfo";
 import usePodcastData from "../../../../../../lib/usePodcastData";
 import { useEffect, useState } from "react";
 import useRssFeed from "../../../../../../lib/useRssFeed";
+import Loader from "@/app/components/Loader";
 
 const page = () => {
   const pathname = usePathname();
