@@ -44,7 +44,7 @@ To build the application for production, run:
 ```bash
 npm run build
 ```
-This will create a .next directory containing the optimized output. After building the application, you can run it in production mode with:
+This will create a <b>.next</b> directory containing the optimized output. After building the application, you can run it in production mode with:
 ```bash
 npm start
 ```
