@@ -1,4 +1,4 @@
-function Loader() {
+const Loader: React.FC = () => {
   return (
     <div
       className={
@@ -6,6 +6,6 @@ function Loader() {
       }
     ></div>
   );
-}
+};
 
 export default Loader;

@@ -5,8 +5,12 @@ import { LoadingContext } from "../../../lib/LoadingProvider";
 import Loader from "./Loader";
 import { useContext } from "react";
 
-const Nav = () => {
-  const { isLoading } = useContext(LoadingContext);
+interface LoadingContextType {
+  isLoading: boolean;
+}
+
+const Nav: React.FC = () => {
+  const { isLoading } = useContext(LoadingContext) as LoadingContextType;
 
   return (
     <nav className="flex-between w-full mb-6">

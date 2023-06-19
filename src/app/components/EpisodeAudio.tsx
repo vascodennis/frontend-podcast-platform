@@ -1,7 +1,19 @@
-import React from "react";
+interface EpisodeDetails {
+  title: string;
+  description: string;
+  enclosure: {
+    $: {
+      url: string;
+    };
+  };
+}
 
-function EpisodeAudio({ episodedetails }) {
-  if (!episodedetails || episodedetails.length === 0) {
+interface EpisodeAudioProps {
+  episodedetails: EpisodeDetails;
+}
+
+const EpisodeAudio: React.FC<EpisodeAudioProps> = ({ episodedetails }) => {
+  if (!episodedetails) {
     return <p>No episodes available.</p>;
   }
 
@@ -21,6 +33,6 @@ function EpisodeAudio({ episodedetails }) {
       </div>
     </div>
   );
-}
+};
 
 export default EpisodeAudio;

@@ -1,10 +1,36 @@
-const EpisodeInfo = ({ episodeinfo }) => {
-  if (!episodeinfo || episodeinfo.length === 0) {
+interface EpisodeInfoProps {
+  episodeinfo: {
+    results: {
+      collectionId: number;
+      artworkUrl600: string;
+      collectionName: string;
+      artistName: string;
+    }[];
+  };
+}
+
+interface PodcastData {
+  feed: {
+    entry: {
+      id: {
+        attributes: {
+          "im:id": string;
+        };
+      };
+      summary: {
+        label: string;
+      };
+    }[];
+  };
+}
+
+const EpisodeInfo: React.FC<EpisodeInfoProps> = ({ episodeinfo }) => {
+  if (!episodeinfo) {
     return <p>No episodes available.</p>;
   }
 
   const cachedData = localStorage.getItem("podcastsData");
-  const episodeDescription = JSON.parse(cachedData);
+  const episodeDescription: PodcastData = JSON.parse(cachedData);
 
   const collectionID = episodeinfo.results[0].collectionId;
 

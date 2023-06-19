@@ -1,4 +1,10 @@
-export const PodcastCard = ({ title, author, image }) => {
+interface PodcastCardTypes {
+  title: string;
+  author: string;
+  image: string;
+}
+
+const PodcastCard: React.FC<PodcastCardTypes> = ({ title, author, image }) => {
   return (
     <div className="w-60 h-46 flex flex-col rounded shadow-lg border border-grayLight items-center justify-center relative p-6">
       <div
@@ -14,3 +20,5 @@ export const PodcastCard = ({ title, author, image }) => {
     </div>
   );
 };
+
+export default PodcastCard;

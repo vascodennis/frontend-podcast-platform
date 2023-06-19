@@ -1,23 +1,50 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { PodcastCard } from "./PodcastCard";
+import PodcastCard from "./PodcastCard";
 
 import Link from "next/link";
 import usePodcastsAll from "../../../lib/usePodcastAll";
 import { useContext } from "react";
 import { LoadingContext } from "../../../lib/LoadingProvider";
 
-const Feed = () => {
-  const [allPodcasts, setAllPodcasts] = useState([]);
-  const [error, setError] = useState(null);
+interface LoadingContextType {
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+}
 
-  const [searchText, setSearchText] = useState("");
+interface PodcastEntry {
+  "im:artist": {
+    label: string;
+  };
+  "im:name": {
+    label: string;
+  };
+  id: {
+    attributes: {
+      "im:id": string;
+    };
+  };
+}
+interface AllPodcastsType {
+  feed: {
+    entry: PodcastEntry[];
+  };
+}
+
+const Feed: React.FC = () => {
+  const [allPodcasts, setAllPodcasts] = useState<AllPodcastsType>({
+    feed: { entry: [] },
+  });
+  const [error, setError] = useState<string>(null);
+
+  const [searchText, setSearchText] = useState<string>("");
   const [searchedResults, setSearchedResults] = useState([]);
 
-  const searchTimeoutRef = useRef(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const { isLoading, setIsLoading } =
+    useContext<LoadingContextType>(LoadingContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +57,7 @@ const Feed = () => {
         if (
           cachedData !== null &&
           cachedTime !== null &&
-          Date.now() - cachedTime < 86400000
+          Date.now() - Number(cachedTime) < 86400000
         ) {
           setAllPodcasts(JSON.parse(cachedData));
           setIsLoading(false);
@@ -56,20 +83,21 @@ const Feed = () => {
     };
   }, []);
 
-  const filterPrompts = (searchText) => {
+  const filterPrompts = (searchText: string): PodcastEntry[] => {
     const regex = new RegExp(searchText, "i");
     return allPodcasts.feed.entry.filter(
-      (item) =>
+      (item: PodcastEntry) =>
         regex.test(item["im:artist"].label) || regex.test(item["im:name"].label)
     );
   };
 
-  const handleSearchChange = (e) => {
-    clearTimeout(searchTimeoutRef.current);
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
     const searchText = e.target.value;
     setSearchText(searchText);
 
-    // debounce method
     searchTimeoutRef.current = setTimeout(() => {
       const searchResult = filterPrompts(searchText);
       setSearchedResults(searchResult);

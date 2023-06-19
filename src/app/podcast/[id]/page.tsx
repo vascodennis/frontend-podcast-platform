@@ -1,19 +1,19 @@
 "use client";
 
-import EpisodeInfo from "@/app/components/EpisodeInfo";
-import EpisodesTable from "@/app/components/EpisodesTable";
+import EpisodeInfo from "../../components/EpisodeInfo";
+import EpisodesTable from "../../components/EpisodesTable";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import useRssFeed from "../../../../lib/useRssFeed";
 import usePodcastData from "../../../../lib/usePodcastData";
-import Loader from "@/app/components/Loader";
+import Loader from "../../components/Loader";
 import { LoadingContext } from "../../../../lib/LoadingProvider";
 
-const PodcastDetails = () => {
+const PodcastDetails: React.FC = () => {
   const pathname = usePathname();
-  const podcastID = pathname.split("/")[2];
+  const podcastID: string = pathname.split("/")[2];
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const { setIsLoading } = useContext(LoadingContext);
 
